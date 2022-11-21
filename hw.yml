@@ -11,24 +11,6 @@ spec:
   selector:
     app: nginx
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: nginx-config
-data:
-  nginx.conf: '
-events {
-}
-http {
-   server {
-       listen 80;
-       location / {
-           return 200 "Hello world!";
-       }
-   }
-}
-'
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,13 +32,3 @@ spec:
         ports:
         - containerPort: 80
           name: web
-        volumeMounts:
-          - name: config-vol
-            mountPath: /etc/nginx/
-      volumes:
-        - name: config-vol
-          configMap:
-            name: nginx-config
-            items:
-              - key: nginx.conf
-                path: nginx.conf
