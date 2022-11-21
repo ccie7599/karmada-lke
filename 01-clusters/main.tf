@@ -22,28 +22,28 @@ resource "local_file" "kubeconfig_jp" {
   content  = module.jp.kubeconfig
 } 
 
-module "jp" {
+module "in" {
   source = "../modules/cluster"
 
-  name   = "jp"
-  region = "ap-northeast"
+  name   = "in"
+  region = "ap-west"
 }
 
-resource "local_file" "kubeconfig_jp" {
-  filename = "../kubeconfig-jp"
-  content  = module.jp.kubeconfig
+resource "local_file" "kubeconfig_in" {
+  filename = "../kubeconfig-in"
+  content  = module.in.kubeconfig
 }
   
-module "ap" {
+module "au" {
   source = "../modules/cluster"
 
-  name   = "ap"
-  region = "ap-south"
+  name   = "au"
+  region = "ap-southeast"
 }
 
-resource "local_file" "kubeconfig_ap" {
-  filename = "../kubeconfig-ap"
-  content  = module.ap.kubeconfig
+resource "local_file" "kubeconfig_au" {
+  filename = "../kubeconfig-au"
+  content  = module.au.kubeconfig
 }
 
 module "us" {
@@ -69,17 +69,7 @@ resource "local_file" "kubeconfig_uk" {
   filename = "../kubeconfig-uk"
   content  = module.uk.kubeconfig
 }
-module "eu" {
-  source = "../modules/cluster"
 
-  name   = "eu"
-  region = "eu-central"
-}
-
-resource "local_file" "kubeconfig_eu" {
-  filename = "../kubeconfig-eu"
-  content  = module.uk.kubeconfig
-}
   
 module "eu" {
   source = "../modules/cluster"
