@@ -1,0 +1,38 @@
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+ name: hello-propagation
+spec:
+ propagateDeps: true
+ resourceSelectors:
+   - apiVersion: apps/v1
+     kind: Deployment
+     name: nginx
+   - apiVersion: v1
+     kind: Service
+     name: nginx
+ placement:
+   clusterAffinity:
+     clusterNames:
+       - eu
+       - au
+       - us
+       - uk
+       - sg
+       - jp
+       - in
+   replicaScheduling:
+     replicaDivisionPreference: Weighted
+     replicaSchedulingType: Divided
+     weightPreference:
+       staticWeightList:
+         - targetCluster:
+             clusterNames:
+               - us
+                 au
+                 uk
+                 sg
+                 jp
+                 in
+                 eu
+           weight: 1
