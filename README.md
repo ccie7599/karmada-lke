@@ -41,13 +41,30 @@ terraform -chdir=04-discovery apply -auto-approve
 terraform -chdir=05-dashboards init
 terraform -chdir=05-dashboards apply -auto-approve
 
-# Clean up
+# Clean up (once done and you want to destroy the clusters)
 terraform -chdir=05-dashboards destroy -auto-approve
 terraform -chdir=04-discovery destroy -auto-approve
 terraform -chdir=03-workers destroy -auto-approve
 terraform -chdir=02-karmada destroy -auto-approve
 terraform -chdir=01-clusters destroy -auto-approve
 ```
+## Deploying a test Service
+
+A sample nginx deployment and load balancer service yaml are included. To deploy, apply the yml via kubectl:
+```
+kubectl apply -f hw.yml --kubeconfig=karmada-config
+```
+NOTE: There seems to be a problem with Karmada propagating the ConfigMap needed for the ngnix pod. This must be deployed to every cluster for now. To do so, type this command for each cluster (change the kubeconfig value for each).
+```
+kubectl apply -f cm.yml --kubeconfig=kubeconfig-us
+```
+You will also need to deploy a Karmada policy file to set load balancing and cluster deployment rules for the nginx deployment. To apply the sample file, use kubectl:
+```
+kubectl apply -f policy.yml --kubeconfig=karmada-config
+```
+Once the deployment and application are applied, the included get-gtm.sh script can extract load balancer IPs to a gtm_hostnames CSV. To run the script, use:
+```
+./get-gtm.sh
 
 ## Accessing the Kiali dashboard
 
