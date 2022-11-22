@@ -6,9 +6,9 @@ The script is written to use minimal compute resources, please do not modify thi
 
 # Prerequisites 
 
--Linode Account
--Akamai Account (for GTM integration)
--kubectl installed locally - https://kubernetes.io/docs/tasks/tools/#kubectl
+-- Linode Account
+-- Akamai Account (for GTM integration)
+-- kubectl installed locally - https://kubernetes.io/docs/tasks/tools/#kubectl
 
 # Known Current Issues
 
