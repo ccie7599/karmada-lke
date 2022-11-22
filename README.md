@@ -2,12 +2,32 @@
 
 This project helps you bootstrap and orchestrate several Kubernetes clusters across different regions and clouds from a single control plane.
 
+The script is written to use minimal compute resources, please do not modify this. 
+
+# Prerequisites 
+
+-Linode Account
+-Akamai Account (for GTM integration)
+-kubectl installed locally - https://kubernetes.io/docs/tasks/tools/#kubectl
+
 # Known Current Issues
+
+-As the hardware is by default 4GB shared Linodes, occasionally the terraform steps, in particular the helm chart applications, will time out. If a terraform command ends in error, run it again.
 
 -Karmada is not propagating the ConfigMap volume (needed for nginx config) to the clusters. This requires a manual application to each cluster.
 
 -Istio mesh is running into terraform installation errors on the cluster. This is affecting Kiali visibility and reports. 
 
+# To-Do List
+
+-Build an terraform file to auto-load the GTM hostnames into a GTM property.
+
+-Build a better sample deployment app.
+
+-Fix Problems above.
+
+
+# Diagram
 ![Scaling Kubernetes clusters across regions and clouds](assets/preview.gif)
 
 The setup helps study:
