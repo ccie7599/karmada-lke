@@ -12,7 +12,7 @@ The script is written to use minimal compute resources, please do not modify thi
 
 # Known Current Issues
 
-- Karmada is not propagating the ConfigMap volume (needed for nginx config) to the clusters. This requires a manual application to each cluster.
+- --Karmada is not propagating the ConfigMap volume (needed for nginx config) to the clusters. This requires a manual application to each cluster.--SOLVED! Need to enable the PropagateDeps feature in the Karmada controller manager as described here - https://karmada.io/docs/userguide/scheduling/propagate-dependencies/#enable-propagatedeps-feature - updated instructions to include that step. 
 
 - On Step 3 of the terraform apply, the Istio mesh is running into terraform installation errors on the cluster. This is affecting Kiali visibility and reports unless the terraform command is repeated until success. The original author of the exercise makes note of this on the very bottom of this README.
 
@@ -87,15 +87,24 @@ terraform -chdir=03-workers destroy -auto-approve
 terraform -chdir=02-karmada destroy -auto-approve
 terraform -chdir=01-clusters destroy -auto-approve
 ```
+
+## Enabling Propogating Dependency Replication
+
+Karmada can automatically deploy dependicies to deployments/services (such as ConfigMaps and Secrets). This needs to be first enabled in the cluster manager. To do so, run the following command:
+```
+kubectl edit deployment karmada-controller-manager -n karmada-system --kubeconfig=kubeconfig-cluster-manager
+```
+within ```spec.containers.command``` in the file, add a line-
+```
+        - --feature-gates=PropagateDeps=true
+```
+Once the feature is enabled in the Karmada cluster, it can be used by adding ```spec.propagationDeps: true``` to the policy file. The sample policy.yml included in the repository has an example of this.
+
 ## Deploying a test Service
 
 A sample nginx deployment and load balancer service yaml are included. To deploy, apply the yml via kubectl:
 ```
 kubectl apply -f hw.yml --kubeconfig=karmada-config
-```
-NOTE: There seems to be a problem with Karmada propagating the ConfigMap needed for the ngnix pod. This must be deployed to every cluster for now. To do so, type this command for each cluster (change the kubeconfig value for each).
-```
-kubectl apply -f cm.yml --kubeconfig=kubeconfig-us
 ```
 You will also need to deploy a Karmada policy file to set load balancing and cluster deployment rules for the nginx deployment. To apply the sample file, use kubectl:
 ```
