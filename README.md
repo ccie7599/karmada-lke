@@ -1,6 +1,6 @@
 # Multi-cluster, multi-region, multi-cloud Kubernetes
 
-This project helps you bootstrap and orchestrate several Kubernetes clusters across different regions and clouds from a single control plane.
+This project helps you bootstrap and orchestrate several Kubernetes clusters across different LKE regions from a single control plane.
 
 The script is written to use minimal compute resources, please do not modify this. 
 
@@ -39,13 +39,6 @@ kubectl get {deployments|services} --kubeconfig=karmada-config
 
 # Diagram
 ![Scaling Kubernetes clusters across regions and clouds](assets/preview.gif)
-
-The setup helps study:
-
-- High availability installation of Kubernetes.
-- Multi-region deployments.
-- Multi-cloud deployments.
-- Upgrading clusters and apps.
 
 ## Getting started
 
