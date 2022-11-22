@@ -15,12 +15,12 @@ The setup helps study:
 
 You need to create a Linode token to access the API:
 
-```bash
+```
 linode-cli profile token-create
 export LINODE_TOKEN=<insert the token here>
 ```
 
-```bash
+```
 # Create the clusters
 terraform -chdir=01-clusters init
 terraform -chdir=01-clusters apply -auto-approve
@@ -65,16 +65,16 @@ kubectl apply -f policy.yml --kubeconfig=karmada-config
 Once the deployment and application are applied, the included get-gtm.sh script can extract load balancer IPs to a gtm_hostnames CSV. To run the script, use:
 ```
 ./get-gtm.sh
-
+```
 ## Accessing the Kiali dashboard
 
-```bash
+```
 kubectl --kubeconfig=kubeconfig-us port-forward svc/kiali 8081:20001 -n istio-system
 ```
 
 ## Testing the code
 
-```bash
+```
 ./test.sh
 ```
 
@@ -82,20 +82,20 @@ The script will print the command you can use to launch the world map dashboard.
 
 ## Creating new certs
 
-```bash
+```
 $ git clone https://github.com/istio/istio
 ```
 
 Create a `certs` folder and change to that directory:
 
-```bash
+```
 $ mkdir certs
 $ cd certs
 ```
 
 Create the root certificate with:
 
-```bash
+```
 $ make -f ../istio/tools/certs/Makefile.selfsigned.mk root-ca
 ```
 
@@ -108,7 +108,7 @@ The command generated the following files:
 
 For each cluster, generate an intermediate certificate and key for the Istio Certificate Authority:
 
-```bash
+```
 $ make -f ../istio/tools/certs/Makefile.selfsigned.mk cluster1-cacerts
 $ make -f ../istio/tools/certs/Makefile.selfsigned.mk cluster2-cacerts
 $ make -f ../istio/tools/certs/Makefile.selfsigned.mk cluster3-cacerts
