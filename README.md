@@ -76,7 +76,10 @@ terraform -chdir=04-discovery apply -auto-approve
 # Install Kiali
 terraform -chdir=05-dashboards init
 terraform -chdir=05-dashboards apply -auto-approve
+```
+Save the kiaki_token_us value given after the Kiali terraform installation to access the kiali dashboard.
 
+```
 # Clean up (once done and you want to destroy the clusters)
 terraform -chdir=05-dashboards destroy -auto-approve
 terraform -chdir=04-discovery destroy -auto-approve
@@ -107,6 +110,7 @@ Once the deployment and application are applied, the included get-gtm.sh script 
 ```
 kubectl --kubeconfig=kubeconfig-us port-forward svc/kiali 8081:20001 -n istio-system
 ```
+Once kubectl port-forwarding is active, the Kiali dashboard is available at http://localhost:8081/. The kubeconfig-us token generated on
 
 ## Testing the code
 
