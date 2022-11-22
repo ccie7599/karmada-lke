@@ -20,11 +20,11 @@ The script is written to use minimal compute resources, please do not modify thi
 
 # To-Do List
 
--Build an terraform file to auto-load the GTM hostnames into a GTM property.
+- Build an terraform file to auto-load the GTM hostnames into a GTM property.
 
--Build a better sample deployment app.
+- Build a better sample deployment app.
 
--Fix Problems above.
+- Fix Problems above.
 
 # Usage once configured
 
