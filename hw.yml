@@ -32,3 +32,10 @@ spec:
         ports:
         - containerPort: 80
           name: web
+      volumes:
+        - name: config-vol
+          configMap:
+            name: nginx-config
+            items:
+              - key: nginx.conf
+                path: nginx.conf
