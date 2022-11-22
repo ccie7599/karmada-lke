@@ -12,11 +12,11 @@ The script is written to use minimal compute resources, please do not modify thi
 
 # Known Current Issues
 
--As the hardware is by default 4GB shared Linodes, occasionally the terraform steps, in particular the helm chart applications, will time out. If a terraform command ends in error, run it again.
-
 -Karmada is not propagating the ConfigMap volume (needed for nginx config) to the clusters. This requires a manual application to each cluster.
 
--Istio mesh is running into terraform installation errors on the cluster. This is affecting Kiali visibility and reports. 
+-On Step 3 of the terraform apply, the Istio mesh is running into terraform installation errors on the cluster. This is affecting Kiali visibility and reports. 
+
+-As the hardware is by default 4GB shared Linodes, occasionally the terraform steps, in particular the helm chart applications, will time out. If a terraform command ends in error, run it again (note this does not apply to the above-mentioned Istio errors).
 
 # To-Do List
 
