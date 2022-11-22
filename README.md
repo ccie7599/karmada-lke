@@ -2,6 +2,12 @@
 
 This project helps you bootstrap and orchestrate several Kubernetes clusters across different regions and clouds from a single control plane.
 
+# Known Current Issues
+
+-Karmada is not propagating the ConfigMap volume (needed for nginx config) to the clusters. This requires a manual application to each cluster.
+
+-Istio mesh is running into terraform installation errors on the cluster. This is affecting Kiali visibility and reports. 
+
 ![Scaling Kubernetes clusters across regions and clouds](assets/preview.gif)
 
 The setup helps study:
