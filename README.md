@@ -52,7 +52,7 @@ terraform -chdir=01-clusters destroy -auto-approve
 ## Accessing the Kiali dashboard
 
 ```bash
-kubectl --kubeconfig=kubeconfig-ap port-forward svc/kiali 8081:20001 -n istio-system
+kubectl --kubeconfig=kubeconfig-us port-forward svc/kiali 8081:20001 -n istio-system
 ```
 
 ## Testing the code
