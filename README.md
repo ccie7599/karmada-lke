@@ -26,6 +26,16 @@ The script is written to use minimal compute resources, please do not modify thi
 
 -Fix Problems above.
 
+# Usage once configured
+
+Karmada core concept details can be found at karmada.io. A master cluster (kubeconfig=karmada-config) maintains workload scheduling across the worker clusters (kubeconfig=kubeconfig-{us|eu|jp|uk|sg|jp|au}). Applications and services can be deployed directly to the master cluster, along with a declarative policy file, and the master cluster will schedule the pods and services as requested. Manifests are applied via-
+```
+kubectl apply -f {manifest.yml} --kubeconfig=karmada-config
+```
+Similarly, information on deployments and services can be queried directly from the master cluster for the entire multi-cluster deployment-
+```
+kubectl get {deployments|services} --kubeconfig=karmada-config
+```
 
 # Diagram
 ![Scaling Kubernetes clusters across regions and clouds](assets/preview.gif)
