@@ -10,7 +10,7 @@ The script is written to use minimal compute resources, please do not modify thi
 - Akamai Account (for GTM integration)
 - kubectl installed locally - https://kubernetes.io/docs/tasks/tools/#kubectl
 
-# Known Current Issues
+# Current Issues
 
 - ~~Karmada is not propagating the ConfigMap volume (needed for nginx config) to the clusters. This requires a manual application to each cluster.~~. SOLVED! Need to enable the PropagateDeps feature in the Karmada controller manager as described here - https://karmada.io/docs/userguide/scheduling/propagate-dependencies/#enable-propagatedeps-feature - updated instructions to include that step. 
 
