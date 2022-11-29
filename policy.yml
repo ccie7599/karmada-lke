@@ -7,20 +7,13 @@ spec:
  resourceSelectors:
    - apiVersion: apps/v1
      kind: Deployment
-     name: nginx
    - apiVersion: v1
      kind: Service
-     name: nginx
  placement:
    clusterAffinity:
      clusterNames:
-       - eu
-       - au
        - us
        - uk
-       - sg
-       - jp
-       - in
    replicaScheduling:
      replicaDivisionPreference: Weighted
      replicaSchedulingType: Divided
@@ -29,10 +22,5 @@ spec:
          - targetCluster:
              clusterNames:
                - us
-                 au
                  uk
-                 sg
-                 jp
-                 in
-                 eu
            weight: 1

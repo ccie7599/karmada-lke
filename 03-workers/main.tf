@@ -10,7 +10,6 @@ module "worker_us" {
     "root-cert.pem"  = file("../certs/cluster2/root-cert.pem")
     "cert-chain.pem" = file("../certs/cluster2/cert-chain.pem")
   }
-  network_name   = "network1"
   karmada_config = abspath("../karmada-config")
 }
 
@@ -25,6 +24,5 @@ module "worker_uk" {
     "root-cert.pem"  = file("../certs/cluster2/root-cert.pem")
     "cert-chain.pem" = file("../certs/cluster2/cert-chain.pem")
   }
-  network_name   = "network2"
   karmada_config = abspath("../karmada-config")
 }
