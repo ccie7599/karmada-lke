@@ -58,24 +58,17 @@ terraform -chdir=01-clusters apply -auto-approve
 terraform -chdir=02-karmada init
 terraform -chdir=02-karmada apply -auto-approve
 
-# Configure the Karmada workers and install Istio
+# Configure the Karmada workers 
 terraform -chdir=03-workers init
 terraform -chdir=03-workers apply -auto-approve
 
-# Discover other Istio installations
-terraform -chdir=04-discovery init
+# Install Prometheus
+terraform -chdir=04-prometheus init
 terraform -chdir=04-discovery apply -auto-approve
 
-# Install Kiali
-terraform -chdir=05-dashboards init
-terraform -chdir=05-dashboards apply -auto-approve
-```
-Save the kiaki_token_us value given after the Kiali terraform installation to access the kiali dashboard.
 
-```
 # Clean up (once done and you want to destroy the clusters)
-terraform -chdir=05-dashboards destroy -auto-approve
-terraform -chdir=04-discovery destroy -auto-approve
+terraform -chdir=04-prometheus destroy -auto-approve
 terraform -chdir=03-workers destroy -auto-approve
 terraform -chdir=02-karmada destroy -auto-approve
 terraform -chdir=01-clusters destroy -auto-approve
@@ -107,56 +100,6 @@ Once the deployment and application are applied, the included get-gtm.sh script 
 ```
 ./get-gtm.sh
 ```
-## Accessing the Kiali dashboard
-
-```
-kubectl --kubeconfig=kubeconfig-us port-forward svc/kiali 8081:20001 -n istio-system
-```
-Once kubectl port-forwarding is active, the Kiali dashboard is available at http://localhost:8081/. The kubeconfig-us token generated on
-
-## Testing the code
-
-```
-./test.sh
-```
-
-The script will print the command you can use to launch the world map dashboard.
-
-## Creating new certs
-
-```
-$ git clone https://github.com/istio/istio
-```
-
-Create a `certs` folder and change to that directory:
-
-```
-$ mkdir certs
-$ cd certs
-```
-
-Create the root certificate with:
-
-```
-$ make -f ../istio/tools/certs/Makefile.selfsigned.mk root-ca
-```
-
-The command generated the following files:
-
-- `root-cert.pem`: the generated root certificate.
-- `root-key.pem`: the generated root key.
-- `root-ca.conf`: the configuration for OpenSSL to generate the root certificate.
-- `root-cert.csr`: the generated CSR for the root certificate.
-
-For each cluster, generate an intermediate certificate and key for the Istio Certificate Authority:
-
-```
-$ make -f ../istio/tools/certs/Makefile.selfsigned.mk cluster1-cacerts
-$ make -f ../istio/tools/certs/Makefile.selfsigned.mk cluster2-cacerts
-$ make -f ../istio/tools/certs/Makefile.selfsigned.mk cluster3-cacerts
-```
-
 ## Notes
 
-- Sometimes, the EastWest gateway cannot be created because of a validation admission webhook. Since this is sporadic, I think it's related to a race condition. [More on this here.](https://github.com/istio/istio/issues/39205)
 - This Terraform files use the `null_resource` and `kubectl`. You should have `kubectl` installed locally.
