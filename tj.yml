@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techjargon
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: techjargon
+  template:
+    metadata:
+      labels:
+        app: techjargon
+    spec:
+      containers:
+      - name: techjargon
+        image: 170-187-162-115.ip.linodeusercontent.com:5000/techjargon
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 12909
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+      imagePullSecrets:
+      - name: regcred

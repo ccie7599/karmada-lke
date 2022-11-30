@@ -1,0 +1,16 @@
+# This file will set the persistent connection keep alive timeout to 301 seconds (Akamai default is 300 seconds)
+# From: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#keep-alive
+# and: https://nginx.org/en/docs/http/ngx_http_core_module.html#keepalive_timeout
+# Note: We should check with Akamai EA on PConn max requests should be allowed on the Origin Side, Edge Side it's 2000
+# kubectl patch ConfigMap ingress-nginx-controller -n ingress-nginx --patch-file nginx_akamai_pconn.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+data:
+  keep-alive: "301"
+  keep-alive-requests: "2000"

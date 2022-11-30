@@ -11,10 +11,6 @@ terraform {
   }
 }
 
-locals {
-  prometheus_namespace = "prometheus"
-}
-
 provider "kubernetes" {
   config_path = var.kubeconfig_path
 }
@@ -34,11 +30,16 @@ variable "cluster_name" {
   type        = string
 }
 
+resource "kubernetes_namespace" "example" {
+  metadata {
+    name = "prometheus"
+  }
+}
+
 resource "helm_release" "prometheus" {
   name      = "prometheus"
   chart     = "https://github.com/prometheus-community/helm-charts/releases/download/prometheus-15.11.0/prometheus-15.11.0.tgz"
-  namespace = prometheus_namespace
-
+  namespace = "prometheus"
   set {
     name  = "server.global.scrape_interval"
     value = "10s"

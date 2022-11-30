@@ -1,0 +1,18 @@
+# This file creates an ingress through NGINX to techjargon-service
+# from https://kubernetes.github.io/ingress-nginx/user-guide/basic-usage/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-techjargon
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: techjargon-service
+            port:
+              number: 12909
+  ingressClassName: nginx

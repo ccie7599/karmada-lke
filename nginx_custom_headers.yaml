@@ -1,0 +1,45 @@
+# Added by Harald, forward proxy information to backend via new HTTP headers
+# from https://kubernetes.github.io/ingress-nginx/examples/customization/custom-headers/configmap.yaml
+# via https://kubernetes.github.io/ingress-nginx/examples/customization/custom-headers/
+# and https://kubernetes.github.io/ingress-nginx/examples/customization/custom-headers/custom-headers.yaml
+# This file:
+# and exposes some timing information (NGINX-Start / Stop) headers so we can calculate time spent in NGINX
+# Once applied, can check a config with this command: kubectl exec ingress-nginx-controller-873061567-4n3k2 -n ingress-nginx -- cat /etc/nginx/nginx.conf
+# kubectl apply -f proxy_protocol.yaml -n ingress-nginx
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+data:
+  proxy-set-headers: "ingress-nginx/custom-headers"
+  add-headers: "ingress-nginx/custom-response-headers"
+  use-forwarded-headers: "true"
+  compute-full-forwarded-for: "true"
+  enable-real-ip: "true"
+  proxy-real-ip-cidr: "192.168.255.0/24"
+---
+# from https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/docs/examples/customization/custom-headers/custom-headers.yaml
+# via https://kubernetes.github.io/ingress-nginx/examples/customization/custom-headers/
+# via https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#proxy-set-headers
+# and https://docs.nginx.com/nginx/admin-guide/load-balancer/using-proxy-protocol/
+apiVersion: v1
+data:
+  X-Real-Port: "$remote_port"
+  X-NGINX-Start: "${msec}"
+kind: ConfigMap
+metadata:
+  name: custom-headers
+  namespace: ingress-nginx
+---
+# from https://github.com/kubernetes/ingress-nginx/blob/main/docs/examples/customization/custom-headers/configmap-client-response.yaml
+apiVersion: v1
+data:
+  X-NGINX-Stop: "${msec}"
+kind: ConfigMap
+metadata:
+  name: custom-response-headers
+  namespace: ingress-nginx
